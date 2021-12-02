@@ -54,13 +54,11 @@ class Item {
     required this.headerValue,
     required this.color,
     this.isExpanded = false,
-    required this.id,
   });
 
   String headerValue;
   Color color;
   bool isExpanded;
-  int id;
 }
 
 final listTileTitles = [
@@ -76,15 +74,15 @@ final listTileColors = [
   Color(0xFF691E06)
 ];
 
-List<Item> generateItems(int numberOfItems) {
-  return List<Item>.generate(numberOfItems, (int index) {
-    return Item(
-      headerValue: listTileTitles[index],
-      color: listTileColors[index],
-      id: index,
-    );
-  });
-}
+// List<Item> generateItems(int numberOfItems) {
+//   return List<Item>.generate(numberOfItems, (int index) {
+//     return Item(
+//       headerValue: listTileTitles[index],
+//       color: listTileColors[index],
+//       id: index,
+//     );
+//   });
+// }
 
 int? lastExpanded;
 
@@ -103,12 +101,39 @@ class MainPage extends StatefulWidget {
 
 /// This is the private State class that goes with MainPage.
 class _MainPageState extends State<MainPage> {
-  final List<Item> _data = generateItems(4);
+  //final List<Item> _data = generateItems(4);
 
   int _count = 0;
-  List<RecipeCard> _recipes = [];
+  Item item1 = new Item(
+    headerValue: listTileTitles[0],
+    color: listTileColors[0],
+    isExpanded: false,
+  );
+  Item item2 = new Item(
+    headerValue: listTileTitles[1],
+    color: listTileColors[1],
+    isExpanded: false,
+  );
+  Item item3 = new Item(
+    headerValue: listTileTitles[2],
+    color: listTileColors[2],
+    isExpanded: false,
+  );
+  Item item4 = new Item(
+    headerValue: listTileTitles[3],
+    color: listTileColors[3],
+    isExpanded: false,
+  );
+  List<RecipeCard> _recipes1 = [];
+  List<RecipeCard> _recipes2 = [];
+  List<RecipeCard> _recipes3 = [];
+  List<RecipeCard> _recipes4 = [];
+  bool item1Tapped = false;
+  bool item2Tapped = false;
+  bool item3Tapped = false;
+  bool item4Tapped = false;
 
-  void _addNewRecipe(int i) {
+  void _addNewRecipe1(int i) {
     setState(() {
       _count = _count + i;
       if (i > 0) {
@@ -122,7 +147,67 @@ class _MainPageState extends State<MainPage> {
           ingredients: ingredients,
           instructions: instructions,
         );
-        _recipes.add(card);
+        _recipes1.add(card);
+        print(card.prepTime);
+      }
+    });
+  }
+
+  void _addNewRecipe2(int i) {
+    setState(() {
+      _count = _count + i;
+      if (i > 0) {
+        RecipeCard card = new RecipeCard(
+          image: _image,
+          title: title,
+          description: description,
+          prepTime: prepTime,
+          cookTime: cookTime,
+          numServings: numServings,
+          ingredients: ingredients,
+          instructions: instructions,
+        );
+        _recipes2.add(card);
+        print(card.prepTime);
+      }
+    });
+  }
+
+  void _addNewRecipe3(int i) {
+    setState(() {
+      _count = _count + i;
+      if (i > 0) {
+        RecipeCard card = new RecipeCard(
+          image: _image,
+          title: title,
+          description: description,
+          prepTime: prepTime,
+          cookTime: cookTime,
+          numServings: numServings,
+          ingredients: ingredients,
+          instructions: instructions,
+        );
+        _recipes3.add(card);
+        print(card.prepTime);
+      }
+    });
+  }
+
+  void _addNewRecipe4(int i) {
+    setState(() {
+      _count = _count + i;
+      if (i > 0) {
+        RecipeCard card = new RecipeCard(
+          image: _image,
+          title: title,
+          description: description,
+          prepTime: prepTime,
+          cookTime: cookTime,
+          numServings: numServings,
+          ingredients: ingredients,
+          instructions: instructions,
+        );
+        _recipes4.add(card);
         print(card.prepTime);
       }
     });
@@ -141,18 +226,39 @@ class _MainPageState extends State<MainPage> {
     return ExpansionPanelList(
       expansionCallback: (int index, bool isExpanded) {
         setState(() {
-          _data[index].isExpanded = !isExpanded;
-          if (_data[index].isExpanded) {
-            lastExpanded = index;
+          switch (index) {
+            case 0:
+              {
+                item1.isExpanded = !isExpanded;
+              }
+              break;
+
+            case 1:
+              {
+                item2.isExpanded = !isExpanded;
+              }
+              break;
+
+            case 2:
+              {
+                item3.isExpanded = !isExpanded;
+              }
+              break;
+
+            case 3:
+              {
+                item4.isExpanded = !isExpanded;
+              }
+              break;
           }
         });
       },
-      children: _data.map<ExpansionPanel>((Item item) {
-        return ExpansionPanel(
+      children: [
+        ExpansionPanel(
           headerBuilder: (BuildContext context, bool isExpanded) {
             return ListTile(
               title: Text(
-                item.headerValue,
+                item1.headerValue,
                 style: GoogleFonts.montserrat(
                     color: Colors.white, fontSize: 20, letterSpacing: 2),
               ),
@@ -179,24 +285,168 @@ class _MainPageState extends State<MainPage> {
                           //elevation: 16,
                           child: Container(
                             child: MyCustomForm(
-                              update: _addNewRecipe,
+                              update: _addNewRecipe1,
                             ),
                             padding: EdgeInsets.all(20),
                           ),
                         );
                       });
                 }),
-            if (_recipes.length > 0)
+            if (_recipes1.length > 0)
               Column(
-                children: _recipes.map<RecipeCard>((card) {
+                children: _recipes1.map<RecipeCard>((card) {
                   return card;
                 }).toList(),
               )
           ]),
-          isExpanded: item.isExpanded,
-          backgroundColor: item.color,
-        );
-      }).toList(),
+          isExpanded: item1.isExpanded,
+          backgroundColor: item1.color,
+        ),
+        ExpansionPanel(
+          headerBuilder: (BuildContext context, bool isExpanded) {
+            return ListTile(
+              title: Text(
+                item2.headerValue,
+                style: GoogleFonts.montserrat(
+                    color: Colors.white, fontSize: 20, letterSpacing: 2),
+              ),
+            );
+          },
+          body: Column(children: [
+            ListTile(
+                title: Text(
+                  'Add a new recipe to this category',
+                  style: GoogleFonts.montserrat(
+                      color: Colors.white, fontStyle: FontStyle.italic),
+                ),
+                trailing: Icon(
+                  Icons.add,
+                  color: Colors.white,
+                ),
+                onTap: () {
+                  showDialog(
+                      context: context,
+                      builder: (context) {
+                        return Dialog(
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(30)),
+                          //elevation: 16,
+                          child: Container(
+                            child: MyCustomForm(
+                              update: _addNewRecipe2,
+                            ),
+                            padding: EdgeInsets.all(20),
+                          ),
+                        );
+                      });
+                }),
+            if (_recipes2.length > 0)
+              Column(
+                children: _recipes2.map<RecipeCard>((card) {
+                  return card;
+                }).toList(),
+              )
+          ]),
+          isExpanded: item2.isExpanded,
+          backgroundColor: item2.color,
+        ),
+        ExpansionPanel(
+          headerBuilder: (BuildContext context, bool isExpanded) {
+            return ListTile(
+              title: Text(
+                item3.headerValue,
+                style: GoogleFonts.montserrat(
+                    color: Colors.white, fontSize: 20, letterSpacing: 2),
+              ),
+            );
+          },
+          body: Column(children: [
+            ListTile(
+                title: Text(
+                  'Add a new recipe to this category',
+                  style: GoogleFonts.montserrat(
+                      color: Colors.white, fontStyle: FontStyle.italic),
+                ),
+                trailing: Icon(
+                  Icons.add,
+                  color: Colors.white,
+                ),
+                onTap: () {
+                  showDialog(
+                      context: context,
+                      builder: (context) {
+                        return Dialog(
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(30)),
+                          //elevation: 16,
+                          child: Container(
+                            child: MyCustomForm(
+                              update: _addNewRecipe3,
+                            ),
+                            padding: EdgeInsets.all(20),
+                          ),
+                        );
+                      });
+                }),
+            if (_recipes3.length > 0)
+              Column(
+                children: _recipes3.map<RecipeCard>((card) {
+                  return card;
+                }).toList(),
+              )
+          ]),
+          isExpanded: item3.isExpanded,
+          backgroundColor: item3.color,
+        ),
+        ExpansionPanel(
+          headerBuilder: (BuildContext context, bool isExpanded) {
+            return ListTile(
+              title: Text(
+                item4.headerValue,
+                style: GoogleFonts.montserrat(
+                    color: Colors.white, fontSize: 20, letterSpacing: 2),
+              ),
+            );
+          },
+          body: Column(children: [
+            ListTile(
+                title: Text(
+                  'Add a new recipe to this category',
+                  style: GoogleFonts.montserrat(
+                      color: Colors.white, fontStyle: FontStyle.italic),
+                ),
+                trailing: Icon(
+                  Icons.add,
+                  color: Colors.white,
+                ),
+                onTap: () {
+                  showDialog(
+                      context: context,
+                      builder: (context) {
+                        return Dialog(
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(30)),
+                          //elevation: 16,
+                          child: Container(
+                            child: MyCustomForm(
+                              update: _addNewRecipe4,
+                            ),
+                            padding: EdgeInsets.all(20),
+                          ),
+                        );
+                      });
+                }),
+            if (_recipes4.length > 0)
+              Column(
+                children: _recipes4.map<RecipeCard>((card) {
+                  return card;
+                }).toList(),
+              )
+          ]),
+          isExpanded: item4.isExpanded,
+          backgroundColor: item4.color,
+        )
+      ],
     );
   }
 }
